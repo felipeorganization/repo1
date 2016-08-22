@@ -1,22 +1,135 @@
 {
-  "name": "repo1",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "facebook-brand-resource-centre",
+  "version": "0.0.1",
+  "description": "Facebook Brand Resource Centre",
+  "contributors": [
+    "Chang Wang <chang@jam3.com>",
+    "Simon Bloom <simon.bloom@jam3.com>",
+    "Darcy Clarke <darcy.clarke@jam3.com>",
+    "Iran Reyes <iran.reyes@jam3.com>",
+    "Felipe Vega <felipe.vega@jam3.com>"
+  ],
+  "license": "MIT",
+  "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run pre-build-desktop && npm run pre-build-mobile",
+    "build:production": "npm run build-desktop && npm run build-mobile",
+    "dev": "npm run dev-desktop",
+    "strings": "node tasks/stringTask.js",
+    "postinstall": "linklocal",
+    "pre-build-desktop": "NODE_ENV=production FEATURE_ENV=sourcemap gulp build && npm run strings",
+    "pre-build-mobile": "NODE_ENV=production FEATURE_ENV=sourcemap PLAT_ENV=mobile gulp build-mobile",
+    "build-desktop": "NODE_ENV=production gulp build && npm run strings",
+    "build-mobile": "NODE_ENV=production PLAT_ENV=mobile gulp build-mobile",
+    "dev-mobile": "BABEL_ENV=development FEATURE_ENV=sourcemap PLAT_ENV=mobile gulp",
+    "dev-desktop": "BABEL_ENV=development FEATURE_ENV=sourcemap gulp",
+    "deploy:preview": "npm run build:production && rsync -rPz assets/ ubuntu@fbbrc.jam3.net:/var/www/html/wp-content/themes/fb-branding/prj-fb-branding/assets",
+    "deploy:dev": "npm run build && rsync -rPz assets/ ubuntu@dev-fbbrc.jam3.net:/var/www/html/wp-content/themes/fb-branding/prj-fb-branding/assets",
+    "sync": "rsync -rPz assets/ ubuntu@dev-fbbrc.jam3.net:/var/www/html/wp-content/themes/fb-branding/prj-fb-branding/assets"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/felipeorganization/repo1.git"
+  "keywords": [
+    "gulp",
+    "template"
+  ],
+  "browser": {
+    "empty-object": false
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/felipeorganization/repo1/issues"
-  },
-  "homepage": "https://github.com/felipeorganization/repo1#readme",
   "dependencies": {
-    "lodash": "^4.14.2"
+    "babel-polyfill": "6.3.14",
+    "bodymovin": "git://github.com/bodymovin/bodymovin.git#770b97966c61677c5bab469a15d623228a34e152",
+    "bowser": "^1.3.0",
+    "browsernizr": "^2.0.1",
+    "components": "file:./src/components",
+    "domready": "^1.0.8",
+    "formsy-react": "^0.18.1",
+    "gsap": "^1.18.4",
+    "gsap-lite-promise": "iranreyes/gsap-lite-promise#feature/remove-bluebird-dependency",
+    "history": "^2.1.2",
+    "lodash": "^4.6.1",
+    "md5": "^2.0.0",
+    "moment": "^2.13.0",
+    "react": "0.14.8",
+    "react-addons-transition-group": "0.14.8",
+    "react-autosuggest": "github:jam3/react-autosuggest#production/prj-brc",
+    "react-collapse": "^1.7.2",
+    "react-datepicker": "^0.27.0",
+    "react-dom": "0.14.3",
+    "react-google-recaptcha": "iranreyes/react-google-recaptcha",
+    "react-height": "^2.0.2",
+    "react-motion": "^0.3.1",
+    "react-router": "2.4.1",
+    "react-scroll": "jam3/react-scroll",
+    "react-sticky": "^3.0.0",
+    "react-svg-inline": "^1.0.1",
+    "superagent": "^2.0.0",
+    "superagent-promise": "^1.1.0"
+  },
+  "devDependencies": {
+    "babel-core": "6.4.0",
+    "babel-eslint": "4.1.3",
+    "babel-plugin-add-module-exports": "0.1.2",
+    "babel-plugin-lodash": "2.2.2",
+    "babel-plugin-react-transform": "2.0.0-beta1",
+    "babel-plugin-transform-decorators-legacy": "1.3.4",
+    "babel-preset-es2015": "6.3.13",
+    "babel-preset-react": "6.3.13",
+    "babel-preset-stage-1": "6.3.13",
+    "babel-runtime": "5.8.34",
+    "babelify": "7.2.0",
+    "browser-sync": "^2.9.4",
+    "browserify": "^10.2.6",
+    "browserify-hmr": "^0.3.1",
+    "budo": "^7.0.2",
+    "colors": "^1.1.2",
+    "connect-modrewrite": "^0.8.2",
+    "envify": "3.4.0",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^2.0.0",
+    "eslint-plugin-react": "^3.11.2",
+    "exorcist": "^0.4.0",
+    "gulp": "3.9.0",
+    "gulp-autoprefixer": "3.0.1",
+    "gulp-duration": "0.0.0",
+    "gulp-if": "^2.0.0",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-load-plugins": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-rimraf": "^0.2.0",
+    "gulp-sourcemaps": "^1.3.0",
+    "gulp-stylus": "~2.0.0",
+    "gulp-uglify": "~1.0.1",
+    "gulp-util": "~3.0.1",
+    "gulp-watch": "^4.3.4",
+    "linklocal": "^2.5.2",
+    "node-notifier": "^4.2.1",
+    "notify-error": "^1.2.0",
+    "react-proxy": "1.1.2",
+    "react-transform-hmr": "1.0.1",
+    "run-sequence": "^1.1.5",
+    "stringify": "3.2.0",
+    "uglifyify": "^3.0.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "vinyl-transform": "^1.0.0",
+    "watchify": "3.6.1",
+    "yamlify": "0.1.2"
+  },
+  "tooler": "./tools/component.js",
+  "browserify": {
+    "transform": [
+      "babelify",
+      "yamlify",
+      "envify",
+      [
+        "stringify",
+        {
+          "extensions": [
+            ".svg",
+            ".bodymovin"
+          ]
+        }
+      ]
+    ]
   }
 }
