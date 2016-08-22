@@ -45,7 +45,6 @@
     "gsap-lite-promise": "iranreyes/gsap-lite-promise#feature/remove-bluebird-dependency",
     "history": "^2.1.2",
     "lodash": "^4.6.1",
-    "md5": "^2.0.0",
     "moment": "^2.13.0",
     "react": "0.14.8",
     "react-addons-transition-group": "0.14.8",
